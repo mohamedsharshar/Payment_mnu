@@ -1,0 +1,12 @@
+
+tables of database
+
+
+faculties - الكليات
+userlevels - مستويات المستخدمين
+customers - العملاء
+services - الخدمات
+bills - الفواتير
+billamounts - مبالغ الفواتير
+ef_payment - المدفوعات
+posts - المنشورات
