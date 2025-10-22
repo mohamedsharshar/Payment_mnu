@@ -45,4 +45,9 @@ class Customer extends Model
     {
         return $this->hasMany(Bill::class, 'CustomerCode', 'Code');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'customer_code', 'Code');
+    }
 }

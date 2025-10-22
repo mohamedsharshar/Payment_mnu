@@ -41,7 +41,7 @@ class LoginController extends Controller
 
             if ($userType === 'student' && $user->hasRole('student')) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('admin.dashboard'))
+                return redirect()->intended(route('student.dashboard'))
                     ->with('success', 'مرحباً بك يا ' . $user->name);
             }
 

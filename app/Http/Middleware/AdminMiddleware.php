@@ -20,7 +20,13 @@ class AdminMiddleware
         }
 
         if (!auth()->user()->hasRole('admin')) {
-            abort(403, 'غير مصرح لك بالوصول إلى لوحة التحكم');
+            if (auth()->user()->hasRole('student')) {
+                return redirect()->route('student.dashboard')
+                    ->with('error', 'أنت مسجل كطالب. لا يمكنك الوصول إلى لوحة تحكم الأدمن');
+            }
+
+            return redirect()->route('login')
+                ->with('error', 'ليس لديك صلاحية الوصول إلى لوحة التحكم');
         }
 
         return $next($request);

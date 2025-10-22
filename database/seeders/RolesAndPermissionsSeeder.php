@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -44,10 +45,14 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $admin->assignRole('admin');
 
+        $firstCustomer = DB::table('customers')->first();
+        $customerCode = $firstCustomer ? $firstCustomer->Code : '0';
+
         $student = User::create([
             'name' => 'Student User',
             'email' => 'student@student.com',
             'password' => Hash::make('password'),
+            'customer_code' => $customerCode,
         ]);
 
         $student->assignRole('student');
