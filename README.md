@@ -1,52 +1,369 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 نظام الدفع الجامعي - University Payment System
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-11.x-red" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.2+-blue" alt="PHP">
+  <img src="https://img.shields.io/badge/MySQL-5.7+-orange" alt="MySQL">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
 </p>
 
-## About Laravel
+نظام متكامل لإدارة المدفوعات والفواتير الجامعية مبني على Laravel، يتيح للطلاب دفع الرسوم الدراسية والخدمات المختلفة بطريقة إلكترونية آمنة وفعالة.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 نظرة عامة
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+نظام إلكتروني شامل لإدارة عمليات الدفع الجامعية، يوفر:
+- إصدار وتتبع الفواتير للطلاب
+- إدارة المدفوعات الإلكترونية عبر البنوك
+- ربط الطلاب بالكليات والمستويات الدراسية
+- تقارير مالية تفصيلية
 
-## Learning Laravel
+## ✨ المميزات الرئيسية
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 📊 **إدارة الفواتير** - إنشاء وتتبع فواتير الطلاب تلقائياً
+- 💳 **المدفوعات الإلكترونية** - دعم الدفع عبر البنوك والبوابات الإلكترونية
+- 👥 **إدارة الطلاب** - قاعدة بيانات شاملة لبيانات الطلاب
+- 🎓 **التصنيف الأكاديمي** - ربط الطلاب بالكليات والمستويات
+- 📝 **الخدمات المتعددة** - بيان حالة، تربية عسكرية، رسم القيد
+- 🔍 **نظام الأرشفة** - أرشفة الفواتير والمدفوعات القديمة
+- 💰 **الحسابات التلقائية** - حساب المبالغ المستحقة والمدفوعة
+- 📈 **التقارير** - تقارير مالية وإحصائية شاملة
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🛠 المتطلبات التقنية
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| المكون | الإصدار المطلوب |
+|--------|-----------------|
+| PHP | >= 8.2 |
+| Laravel | 11.x |
+| MySQL/MariaDB | >= 5.7 |
+| Composer | Latest |
+| Node.js & NPM | >= 18.x |
 
-## Laravel Sponsors
+## 📦 التثبيت والإعداد
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. استنساخ المشروع
 
-### Premium Partners
+```bash
+git clone https://github.com/mohamedsharshar/Payment_mnu.git
+cd Payment_mnu
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. تثبيت الحزم
 
-## Contributing
+```bash
+composer install
+npm install && npm run build
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. إعداد البيئة
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. إعداد قاعدة البيانات
+
+قم بإنشاء قاعدة بيانات جديدة، ثم عدل ملف `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. تشغيل الـ Migrations
+
+```bash
+php artisan migrate --seed
+```
+
+أو لإعادة بناء قاعدة البيانات:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 6. تشغيل المشروع
+
+```bash
+php artisan serve
+```
+
+المشروع سيعمل على: **http://127.0.0.1:8000**
+
+## 📊 هيكل قاعدة البيانات
+
+### الجداول الرئيسية
+
+| الجدول | الوصف | السجلات |
+|--------|-------|---------|
+| `customers` | بيانات الطلاب والعملاء | الكود، الاسم، البريد، الجوال، الكلية |
+| `bills` | الفواتير المصدرة | رقم الفاتورة، نوع الخدمة، الحالة، المبلغ |
+| `services` | الخدمات المتاحة | بيان حالة، تربية عسكرية، رسم القيد |
+| `billamounts` | تفاصيل مبالغ الفواتير | التسلسل، المبلغ، العملة، الوصف |
+| `ef_payment` | سجل المدفوعات الإلكترونية | رقم المعاملة، البنك، القناة، المبلغ |
+| `faculties` | الكليات | الكود، الاسم العربي/الإنجليزي، الحساب |
+| `userlevels` | المستويات الدراسية | الفرق الدراسية والمستويات |
+
+### مخطط العلاقات
+
+```
+┌─────────────┐
+│  Faculty    │
+│  (الكلية)   │
+└──────┬──────┘
+       │ 1:N
+       │
+┌──────▼──────┐      ┌─────────────┐
+│  Customer   │ N:1  │  UserLevel  │
+│  (الطالب)   ├──────┤  (المستوى)  │
+└──────┬──────┘      └─────────────┘
+       │ 1:N
+       │
+┌──────▼──────┐      ┌─────────────┐
+│    Bill     │ N:1  │   Service   │
+│  (الفاتورة) ├──────┤  (الخدمة)   │
+└──────┬──────┘      └─────────────┘
+       │ 1:N
+       ├──────────────┬──────────────┐
+       │              │              │
+┌──────▼──────┐ ┌────▼─────┐ ┌──────▼──────┐
+│ BillAmount  │ │EfPayment │ │   Archive   │
+│ (التفاصيل) │ │ (الدفع)  │ │  (الأرشيف) │
+└─────────────┘ └──────────┘ └─────────────┘
+```
+
+## 🔗 Models والعلاقات
+
+### Customer (الطالب/العميل)
+
+```php
+$customer = Customer::find('29010151700408');
+$customer->faculty;      // الكلية
+$customer->userLevel;    // المستوى الدراسي
+$customer->bills;        // جميع الفواتير
+```
+
+**الحقول:**
+- `Code`: رقم الطالب (Primary Key)
+- `Name`: الاسم الكامل
+- `Email`: البريد الإلكتروني
+- `Mobile`: رقم الهاتف
+- `facultyID`: معرف الكلية
+- `UserLevelID`: معرف المستوى
+
+### Bill (الفاتورة)
+
+```php
+$bill = Bill::with(['customer', 'service', 'payments'])->find(1);
+$activeBills = Bill::active()->notArchived()->get();
+```
+
+**الحقول:**
+- `ID`: رقم الفاتورة
+- `ServiceType_ID`: نوع الخدمة
+- `CustomerCode`: رقم الطالب
+- `BillStatus`: حالة الفاتورة (1=نشط)
+- `DueDate`: تاريخ الاستحقاق
+- `archive`: حالة الأرشفة
+
+**Scopes متاحة:**
+- `active()`: الفواتير النشطة
+- `archived()`: الفواتير المؤرشفة
+- `notArchived()`: غير المؤرشفة
+
+### Service (الخدمة)
+
+```php
+$service = Service::find(1);
+$service->bills;  // جميع الفواتير لهذه الخدمة
+```
+
+**الخدمات المتاحة:**
+1. **بيان حالة** - 200 جنيه
+2. **تربية عسكرية** - 500 جنيه
+3. **رسم القيد** - 1500 جنيه
+
+### EfPayment (الدفع الإلكتروني)
+
+```php
+$payment = EfPayment::with(['bill', 'customer'])->find(1);
+```
+
+**الحقول:**
+- `Id`: رقم العملية
+- `Billing_Account`: حساب الفوترة
+- `BillNumber`: رقم الفاتورة
+- `Amount`: المبلغ المدفوع
+- `Transaction_Number`: رقم المعاملة
+- `Payment_Method`: طريقة الدفع
+- `Bank_Id`: معرف البنك
+- `Access_Channel`: قناة الوصول (WEB/MOBILE/ATM)
+
+## 🎯 أمثلة الاستخدام
+
+### إنشاء فاتورة جديدة
+
+```php
+$bill = Bill::create([
+    'ServiceType_ID' => 1,           // بيان حالة
+    'CustomerCode' => '29010151700408',
+    'DueDate' => now()->addDays(7),
+    'BillStatus' => 1
+]);
+```
+
+### تسجيل دفعة
+
+```php
+$payment = EfPayment::create([
+    'Billing_Account' => '29010151700408',
+    'BillNumber' => $bill->ID,
+    'Amount' => 200.00,
+    'Transaction_Number' => 'TXN' . time(),
+    'Access_Channel' => 'WEB',
+    'Payment_Date' => now(),
+    'Processing_Date' => now()
+]);
+```
+
+### عرض فواتير طالب
+
+```php
+$customer = Customer::with(['bills.service', 'bills.payments'])
+    ->find('29010151700408');
+
+foreach ($customer->bills as $bill) {
+    echo "الخدمة: {$bill->service->SERVICESName}\n";
+    echo "المبلغ: {$bill->service->value} جنيه\n";
+    echo "الحالة: {$bill->BillStatus}\n";
+}
+```
+
+### البحث والفلترة
+
+```php
+$unpaidBills = Bill::active()
+    ->notArchived()
+    ->whereNull('SettlementDate')
+    ->get();
+
+$customerBills = Bill::where('CustomerCode', '29010151700408')
+    ->with('service')
+    ->orderBy('created_at', 'desc')
+    ->get();
+```
+
+## 🔐 المستخدمون الافتراضيون
+
+| الدور | البريد الإلكتروني | كلمة المرور |
+|-------|-------------------|--------------|
+| Admin | admin@gmail.com | (محددة في seeder) |
+
+## 🚀 التطوير المستقبلي
+
+### المرحلة الأولى (قيد التطوير)
+- [ ] واجهة مستخدم للطلاب
+- [ ] لوحة تحكم إدارية
+- [ ] نظام تسجيل الدخول متعدد المستويات
+
+### المرحلة الثانية
+- [ ] تكامل مع بوابات الدفع (Fawry, PayMob, Vodafone Cash)
+- [ ] إشعارات البريد الإلكتروني والـ SMS
+- [ ] تطبيق موبايل (Flutter/React Native)
+
+### المرحلة الثالثة
+- [ ] تقارير مالية متقدمة ورسوم بيانية
+- [ ] نظام التقسيط والدفعات المؤجلة
+- [ ] API للتكامل مع أنظمة أخرى
+- [ ] نظام استرداد المدفوعات
+
+## 🧪 الاختبار
+
+```bash
+php artisan test
+```
+
+## 📱 API Endpoints (قيد التطوير)
+
+```
+GET    /api/customers/{code}           # بيانات الطالب
+GET    /api/bills/{id}                 # تفاصيل الفاتورة
+POST   /api/bills                      # إنشاء فاتورة جديدة
+GET    /api/services                   # قائمة الخدمات
+POST   /api/payments                   # تسجيل دفعة
+GET    /api/customer/{code}/bills      # فواتير الطالب
+```
+
+## 🤝 المساهمة
+
+المساهمات مرحب بها دائماً! للمساهمة:
+
+1. Fork المشروع
+2. إنشاء Branch جديد
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. Commit التغييرات
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+4. Push للـ Branch
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. فتح Pull Request
+
+### إرشادات المساهمة
+- اتبع معايير كتابة كود Laravel
+- أضف تعليقات واضحة بالعربية أو الإنجليزية
+- اكتب Unit Tests للميزات الجديدة
+- حدّث الـ README عند الحاجة
+
+## 📝 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT - انظر ملف [LICENSE](LICENSE) للتفاصيل.
+
+## 👨‍💻 المطور
+
+**Mohamed Sharshar**
+- GitHub: [@mohamedsharshar](https://github.com/mohamedsharshar)
+- Repository: [Payment_mnu](https://github.com/mohamedsharshar/Payment_mnu)
+
+## 📞 الدعم والتواصل
+
+- 🐛 للإبلاغ عن مشاكل: [GitHub Issues](https://github.com/mohamedsharshar/Payment_mnu/issues)
+- 💡 للاقتراحات: [GitHub Discussions](https://github.com/mohamedsharshar/Payment_mnu/discussions)
+- 📧 للاستفسارات الخاصة: افتح Issue على GitHub
+
+## 📚 موارد مفيدة
+
+- [توثيق Laravel](https://laravel.com/docs)
+- [دليل Laravel بالعربية](https://laravel.io)
+- [توثيق MySQL](https://dev.mysql.com/doc/)
+- [PHP Manual](https://www.php.net/docs.php)
+
+## 🙏 شكر خاص
+
+- فريق Laravel على الإطار الرائع
+- المجتمع المصري للمطورين
+- جميع المساهمين في المشروع
+
+---
+
+<p align="center">
+  Made with ❤️ for Egyptian Universities<br>
+  صُنع بحب للجامعات المصرية
+</p>
+
+<p align="center">
+  <sub>© 2025 Mohamed Sharshar. All rights reserved.</sub>
+</p>
 
 ## Code of Conduct
 
