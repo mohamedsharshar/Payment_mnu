@@ -16,16 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RolesAndPermissionsSeeder::class,
             ServicesSeeder::class,
             CustomersSeeder::class,
             BillsSeeder::class,
             PostsSeeder::class,
-        ]);
-
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('29010151700485')
         ]);
     }
 }

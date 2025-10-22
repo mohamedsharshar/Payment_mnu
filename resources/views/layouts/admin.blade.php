@@ -90,6 +90,19 @@
             font-size: 1.2rem;
         }
 
+        .sidebar-menu form button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-align: right;
+        }
+
+        .sidebar-menu form button:hover {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border-right: 3px solid #dc3545 !important;
+        }
+
         .main-content {
             margin-right: 260px;
             padding: 30px;
@@ -501,6 +514,14 @@
                 <i class="bi bi-gear-fill"></i>
                 <span>الإعدادات</span>
             </a>
+
+            <form action="{{ route('logout') }}" method="POST" style="padding: 0;">
+                @csrf
+                <button type="submit" class="btn w-100 text-end" style="color: var(--text-dark); padding: 15px 25px; border: none; background: transparent; transition: all 0.3s ease; border-right: 3px solid transparent;">
+                    <i class="bi bi-box-arrow-right" style="margin-left: 12px; font-size: 1.2rem;"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </form>
         </div>
     </div>
 
@@ -512,11 +533,19 @@
 
             <div class="user-info">
                 <div>
-                    <strong>{{ Auth::user()->name ?? 'المسؤول' }}</strong>
-                    <p class="mb-0 text-muted" style="font-size: 0.85rem;">Admin</p>
+                    <strong>{{ Auth::user()->name }}</strong>
+                    <p class="mb-0 text-muted" style="font-size: 0.85rem;">
+                        @if(Auth::user()->hasRole('admin'))
+                            <i class="bi bi-shield-fill-check me-1"></i>مدير النظام
+                        @elseif(Auth::user()->hasRole('student'))
+                            <i class="bi bi-person-fill me-1"></i>طالب
+                        @else
+                            <i class="bi bi-person-circle me-1"></i>مستخدم
+                        @endif
+                    </p>
                 </div>
                 <div class="user-avatar">
-                    {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
+                    {{ substr(Auth::user()->name, 0, 1) }}
                 </div>
             </div>
         </div>
