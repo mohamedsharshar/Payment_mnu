@@ -24,6 +24,18 @@
                         </div>
 
                         <div class="col-md-3 mb-3">
+                            <label class="form-label">نوع الإيصال (الخدمة)</label>
+                            <select name="service_type" class="form-select">
+                                <option value="">الكل</option>
+                                @foreach($services as $service)
+                                    <option value="{{ $service->ID }}" {{ request('service_type') == $service->ID ? 'selected' : '' }}>
+                                        {{ $service->SERVICESName }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
                             <label class="form-label">حالة الإيصال</label>
                             <select name="status" class="form-select">
                                 <option value="">الكل</option>
@@ -33,21 +45,24 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label">رقم الإيصال</label>
                             <input type="text" name="search" class="form-control" placeholder="ابحث برقم الإيصال" value="{{ request('search') }}">
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6 mb-3 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary me-2">
                                 <i class="bi bi-search me-2"></i>بحث
                             </button>
-                            <a href="{{ route('student.receipts.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('student.receipts.index') }}" class="btn btn-secondary me-2">
                                 <i class="bi bi-x-circle me-2"></i>إعادة تعيين
                             </a>
                             @if($receipts->count() > 0)
-                            <a href="{{ route('student.receipts.export', request()->all()) }}" class="btn" style="background: var(--success-color); color: white;">
-                                <i class="bi bi-file-earmark-excel me-2"></i>تصدير Excel
+                            <a href="{{ route('student.receipts.export', request()->all()) }}" class="btn btn-success me-2">
+                                <i class="bi bi-file-earmark-excel me-2"></i>Excel
+                            </a>
+                            <a href="{{ route('student.receipts.export.pdf', request()->all()) }}" class="btn btn-danger">
+                                <i class="bi bi-file-earmark-pdf me-2"></i>PDF
                             </a>
                             @endif
                         </div>
@@ -83,7 +98,7 @@
                             @foreach($receipts as $receipt)
                             <tr>
                                 <td><strong>#{{ $receipt->ID }}</strong></td>
-                                <td>{{ $receipt->service ? $receipt->service->Name : 'غير محدد' }}</td>
+                                <td>{{ $receipt->service ? $receipt->service->SERVICESName : 'غير محدد' }}</td>
                                 <td>
                                     @if($receipt->BillStatus == 1)
                                         <span class="badge badge-warning">

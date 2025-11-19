@@ -18,11 +18,35 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        // تحديد قواعد الـ validation بناءً على نوع المستخدم
+        $rules = [
             'user_type' => 'required|in:admin,student',
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+            'password' => 'required|min:6',
+        ];
+
+        $messages = [
+            'user_type.required' => 'يجب اختيار نوع المستخدم',
+            'user_type.in' => 'نوع المستخدم غير صحيح',
+            'password.required' => 'كلمة المرور مطلوبة',
+            'password.min' => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل',
+        ];
+
+        // للطلاب: يجب أن يكون رقم قومي (14 رقم فقط)
+        if ($request->user_type === 'student') {
+            $rules['email'] = ['required', 'string', 'regex:/^[0-9]{14}$/', 'size:14'];
+            $messages['email.required'] = 'الرقم القومي مطلوب';
+            $messages['email.regex'] = 'الرقم القومي يجب أن يكون 14 رقم فقط (بدون حروف أو رموز)';
+            $messages['email.size'] = 'الرقم القومي يجب أن يكون 14 رقم بالضبط';
+            $messages['email.string'] = 'الرقم القومي غير صحيح';
+        } else {
+            // للإداريين: بريد إلكتروني عادي
+            $rules['email'] = 'required|email|max:255';
+            $messages['email.required'] = 'البريد الإلكتروني مطلوب';
+            $messages['email.email'] = 'البريد الإلكتروني غير صحيح';
+            $messages['email.max'] = 'البريد الإلكتروني طويل جداً';
+        }
+
+        $request->validate($rules, $messages);
 
         $credentials = [
             'email' => $request->email,

@@ -179,7 +179,7 @@
                                     <i class="bi bi-person-badge-fill me-2"></i>نوع المستخدم
                                 </label>
                                 <select class="form-select @error('user_type') is-invalid @enderror"
-                                        id="user_type" name="user_type" required>
+                                        id="user_type" name="user_type">
                                     <option value="">اختر نوع المستخدم</option>
                                     <option value="admin" {{ old('user_type') == 'admin' ? 'selected' : '' }}>
                                         مدير النظام (Admin)
@@ -195,11 +195,16 @@
 
                             <div class="mb-4">
                                 <label for="email" class="form-label">
-                                    <i class="bi bi-envelope-fill me-2"></i>البريد الإلكتروني
+                                    <i class="bi bi-person-vcard-fill me-2" id="email-icon"></i>
+                                    <span id="email-label">البريد الإلكتروني</span>
                                 </label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
                                        id="email" name="email" value="{{ old('email') }}"
-                                       placeholder="أدخل بريدك الإلكتروني" required>
+                                       placeholder="أدخل بريدك الإلكتروني">
+                                <small class="text-muted" id="email-help">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    <span id="help-text">أدخل البريد الإلكتروني</span>
+                                </small>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -211,7 +216,11 @@
                                 </label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
                                        id="password" name="password"
-                                       placeholder="أدخل كلمة المرور" required>
+                                       placeholder="أدخل كلمة المرور">
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    للطلاب: كلمة المرور هي الرقم القومي
+                                </small>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -232,5 +241,50 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // تغيير الـ input حسب نوع المستخدم
+        document.getElementById('user_type').addEventListener('change', function() {
+            const emailInput = document.getElementById('email');
+            const emailLabel = document.getElementById('email-label');
+            const emailIcon = document.getElementById('email-icon');
+            const helpText = document.getElementById('help-text');
+
+            if (this.value === 'student') {
+                // للطلاب: رقم قومي فقط
+                emailInput.type = 'text';
+                emailInput.setAttribute('maxlength', '14');
+                emailInput.setAttribute('pattern', '[0-9]{14}');
+                emailInput.setAttribute('inputmode', 'numeric');
+                emailInput.placeholder = 'أدخل الرقم القومي (14 رقم)';
+                emailLabel.textContent = 'الرقم القومي';
+                emailIcon.className = 'bi bi-person-vcard-fill me-2';
+                helpText.textContent = 'يجب أن يكون 14 رقم فقط';
+
+                // منع إدخال أي شيء غير الأرقام
+                emailInput.addEventListener('input', function(e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+
+            } else if (this.value === 'admin') {
+                // للإداريين: بريد إلكتروني
+                emailInput.type = 'email';
+                emailInput.removeAttribute('maxlength');
+                emailInput.removeAttribute('pattern');
+                emailInput.removeAttribute('inputmode');
+                emailInput.placeholder = 'أدخل بريدك الإلكتروني';
+                emailLabel.textContent = 'البريد الإلكتروني';
+                emailIcon.className = 'bi bi-envelope-fill me-2';
+                helpText.textContent = 'أدخل البريد الإلكتروني';
+            }
+        });
+
+        // تطبيق القيود عند تحميل الصفحة إذا كان الطالب محدد مسبقاً
+        window.addEventListener('DOMContentLoaded', function() {
+            const userType = document.getElementById('user_type').value;
+            if (userType === 'student') {
+                document.getElementById('user_type').dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
 </body>
 </html>

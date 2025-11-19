@@ -8,7 +8,9 @@ use App\Http\Controllers\Student\ReceiptController;
 Route::prefix('student')->middleware(['auth', 'student'])->name('student.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/faculty', [FacultyController::class, 'show'])->name('faculty');
+    Route::get('/faculty/export-pdf', [FacultyController::class, 'exportPdf'])->name('faculty.export.pdf');
     Route::get('/receipts', [ReceiptController::class, 'index'])->name('receipts.index');
     Route::get('/receipts/search', [ReceiptController::class, 'search'])->name('receipts.search');
     Route::get('/receipts/export', [ReceiptController::class, 'export'])->name('receipts.export');
+    Route::get('/receipts/export-pdf', [ReceiptController::class, 'exportPdf'])->name('receipts.export.pdf');
 });

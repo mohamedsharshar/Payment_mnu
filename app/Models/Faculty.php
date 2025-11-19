@@ -12,7 +12,10 @@ class Faculty extends Model
 
     protected $primaryKey = 'ID';
 
+    public $incrementing = true;
+
     protected $fillable = [
+        'ID',
         'NameAR',
         'Code',
         'Account',
