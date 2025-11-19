@@ -510,6 +510,30 @@
                 <span>التقارير</span>
             </a>
 
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+
+            <a href="{{ route('admin.restore.customers') }}" class="{{ request()->routeIs('admin.restore.customers*') ? 'active' : '' }}">
+                <i class="bi bi-trash"></i>
+                <span>سلة المحذوفات - الطلاب</span>
+            </a>
+
+            <a href="{{ route('admin.restore.bills') }}" class="{{ request()->routeIs('admin.restore.bills*') ? 'active' : '' }}">
+                <i class="bi bi-trash"></i>
+                <span>سلة المحذوفات - الفواتير</span>
+            </a>
+
+            <a href="{{ route('admin.restore.services') }}" class="{{ request()->routeIs('admin.restore.services*') ? 'active' : '' }}">
+                <i class="bi bi-trash"></i>
+                <span>سلة المحذوفات - الخدمات</span>
+            </a>
+
+            <a href="{{ route('admin.restore.users') }}" class="{{ request()->routeIs('admin.restore.users*') ? 'active' : '' }}">
+                <i class="bi bi-trash"></i>
+                <span>سلة المحذوفات - المستخدمين</span>
+            </a>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+
             <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                 <i class="bi bi-gear-fill"></i>
                 <span>الإعدادات</span>
