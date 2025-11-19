@@ -46,7 +46,13 @@ class BillController extends Controller
         $validated['BillStatus'] = 1;
         $validated['CreatedIn'] = now();
 
-        Bill::create($validated);
+        $bill = Bill::create($validated);
+
+        // إرسال إشعار للطالب
+        $customer = \App\Models\Customer::find($validated['CustomerCode']);
+        if ($customer && $customer->user) {
+            $customer->user->notify(new \App\Notifications\BillCreatedNotification($bill));
+        }
 
         return redirect()->route('admin.bills.index')
             ->with('success', 'تم إنشاء الفاتورة بنجاح');
@@ -65,14 +71,25 @@ class BillController extends Controller
     {
         $bill = Bill::findOrFail($id);
 
+        $oldStatus = $bill->BillStatus;
+
         $validated = $request->validate([
             'ServiceType_ID' => 'required|exists:services,ID',
             'CustomerCode' => 'required|exists:customers,Code',
             'DueDate' => 'required|date',
             'BillStatus' => 'required|integer',
+            'SettlementDate' => 'nullable|date',
         ]);
 
         $bill->update($validated);
+
+        // إرسال إشعار إذا تغيرت الحالة
+        if ($oldStatus != $validated['BillStatus']) {
+            $customer = \App\Models\Customer::find($bill->CustomerCode);
+            if ($customer && $customer->user) {
+                $customer->user->notify(new \App\Notifications\BillStatusUpdatedNotification($bill, $oldStatus, $validated['BillStatus']));
+            }
+        }
 
         return redirect()->route('admin.bills.index')
             ->with('success', 'تم تحديث الفاتورة بنجاح');

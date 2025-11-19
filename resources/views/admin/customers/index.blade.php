@@ -33,12 +33,19 @@
                         <td>{{ $customer->Mobile ?? 'غير محدد' }}</td>
                         <td><span class="badge badge-success">{{ $customer->bills_count }}</span></td>
                         <td>
-                            <a href="{{ route('admin.customers.show', $customer->Code) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.customers.show', $customer->Code) }}" class="btn btn-sm btn-outline-primary me-1">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('admin.customers.edit', $customer->Code) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.customers.edit', $customer->Code) }}" class="btn btn-sm btn-outline-primary me-1">
                                 <i class="bi bi-pencil"></i>
                             </a>
+                            <form action="{{ route('admin.customers.destroy', $customer->Code) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('هل أنت متأكد من حذف هذا الطالب؟');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

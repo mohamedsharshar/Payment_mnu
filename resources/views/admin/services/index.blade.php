@@ -77,9 +77,16 @@
                             </strong>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="editService({{ $service->ID }}, '{{ $service->SERVICESName }}', {{ $service->value }})">
+                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editService({{ $service->ID }}, '{{ $service->SERVICESName }}', {{ $service->value }})">
                                 <i class="bi bi-pencil"></i> تعديل
                             </button>
+                            <form action="{{ route('admin.services.destroy', $service->ID) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('هل أنت متأكد من حذف هذه الخدمة؟');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

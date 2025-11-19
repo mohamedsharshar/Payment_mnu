@@ -56,7 +56,7 @@ class StudentTestDataSeeder extends Seeder
         }
 
         // إنشاء طالب محمد شرشر
-        $mohamedCustomer = Customer::firstOrCreate(
+        $mohamedCustomer = Customer::updateOrCreate(
             ['Code' => '30404291700673'],
             [
                 'Name' => 'محمد شرشر',

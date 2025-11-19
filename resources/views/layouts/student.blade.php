@@ -284,6 +284,14 @@
                 <i class="bi bi-receipt"></i>
                 <span>الإيصالات</span>
             </a>
+
+            <a href="{{ route('student.notifications.index') }}" class="menu-item {{ request()->routeIs('student.notifications.*') ? 'active' : '' }}">
+                <i class="bi bi-bell-fill"></i>
+                <span>الإشعارات</span>
+                @if(Auth::check() && Auth::user()->unreadNotifications->count() > 0)
+                    <span class="badge bg-danger ms-auto" style="font-size: 0.7rem;">{{ Auth::user()->unreadNotifications->count() }}</span>
+                @endif
+            </a>
         </div>
 
         <div class="logout-btn">
@@ -303,6 +311,14 @@
             </div>
 
             <div class="user-info">
+                <a href="{{ route('student.notifications.index') }}" class="position-relative me-3" style="text-decoration: none; color: inherit;">
+                    <i class="bi bi-bell-fill" style="font-size: 1.5rem;"></i>
+                    @if(Auth::check() && Auth::user()->unreadNotifications->count() > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                            {{ Auth::user()->unreadNotifications->count() }}
+                        </span>
+                    @endif
+                </a>
                 <div>
                     <strong>{{ Auth::user()->name }}</strong>
                     <p class="mb-0 text-muted" style="font-size: 0.85rem;">

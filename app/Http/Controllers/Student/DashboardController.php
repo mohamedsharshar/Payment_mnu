@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $customer = $user->customer;
+        $customer = $user->customer()->with('faculty')->first();
 
         if (!$customer) {
             return redirect()->route('login')->with('error', 'لا يوجد بيانات طالب مرتبطة بحسابك');

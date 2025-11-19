@@ -37,18 +37,27 @@
                         <td>{{ $bill->DueDate ? $bill->DueDate->format('Y-m-d') : 'غير محدد' }}</td>
                         <td>
                             @if($bill->BillStatus == 1)
-                                <span class="badge badge-success">نشط</span>
-                            @else
                                 <span class="badge badge-warning">معلق</span>
+                            @elseif($bill->BillStatus == 2)
+                                <span class="badge badge-success">مدفوع</span>
+                            @else
+                                <span class="badge badge-danger">ملغي</span>
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.bills.show', $bill->ID) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.bills.show', $bill->ID) }}" class="btn btn-sm btn-outline-primary me-1">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('admin.bills.edit', $bill->ID) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.bills.edit', $bill->ID) }}" class="btn btn-sm btn-outline-primary me-1">
                                 <i class="bi bi-pencil"></i>
                             </a>
+                            <form action="{{ route('admin.bills.destroy', $bill->ID) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('هل أنت متأكد من حذف هذه الفاتورة؟');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

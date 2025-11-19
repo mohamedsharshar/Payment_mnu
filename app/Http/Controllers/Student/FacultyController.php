@@ -12,7 +12,7 @@ class FacultyController extends Controller
     public function show(Request $request)
     {
         $user = Auth::user();
-        $customer = $user->customer;
+        $customer = $user->customer()->with('faculty')->first();
 
         if (!$customer) {
             return redirect()->route('student.dashboard')->with('error', 'لا يوجد بيانات طالب مرتبطة بحسابك');
