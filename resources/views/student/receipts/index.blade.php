@@ -88,6 +88,7 @@
                             <tr>
                                 <th>رقم الإيصال</th>
                                 <th>نوع الخدمة</th>
+                                <th>القيمة</th>
                                 <th>الحالة</th>
                                 <th>تاريخ الإنشاء</th>
                                 <th>تاريخ الاستحقاق</th>
@@ -99,6 +100,7 @@
                             <tr>
                                 <td><strong>#{{ $receipt->ID }}</strong></td>
                                 <td>{{ $receipt->service ? $receipt->service->SERVICESName : 'غير محدد' }}</td>
+                                <td><strong>{{ $receipt->service ? number_format($receipt->service->value, 2) . ' ج.م' : '-' }}</strong></td>
                                 <td>
                                     @if($receipt->BillStatus == 1)
                                         <span class="badge badge-warning">

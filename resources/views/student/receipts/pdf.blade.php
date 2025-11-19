@@ -1,179 +1,114 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تقرير الإيصالات</title>
     <style>
-        @page {
-            margin: 20mm;
-        }
-
-        * {
-            font-family: 'DejaVu Sans', sans-serif;
-        }
-
         body {
+            font-family: 'DejaVuSans', sans-serif;
             direction: rtl;
             text-align: right;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #333;
+            font-size: 11px;
+            line-height: 1.5;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
         }
 
         .header h1 {
-            color: #2c3e50;
-            font-size: 24px;
-            margin: 0 0 10px 0;
+            font-size: 18px;
+            margin: 5px 0;
         }
 
         .header p {
-            color: #7f8c8d;
-            margin: 5px 0;
-            font-size: 11px;
+            margin: 3px 0;
+            font-size: 10px;
         }
 
-        .info-section {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .info-box {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #000;
         }
 
-        .info-section h3 {
-            color: #2c3e50;
-            font-size: 14px;
+        .info-box h3 {
+            font-size: 13px;
             margin: 0 0 10px 0;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
+            text-decoration: underline;
         }
 
         .info-row {
-            display: table;
-            width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
+            line-height: 1.6;
         }
 
-        .info-label {
-            display: table-cell;
-            width: 30%;
+        .label {
             font-weight: bold;
-            color: #555;
         }
 
-        .info-value {
-            display: table-cell;
-            width: 70%;
-            color: #333;
-        }
-
-        .stats-container {
-            display: table;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            display: table-cell;
-            width: 25%;
-            background: #ecf0f1;
-            padding: 12px;
+        .stats {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #000;
             text-align: center;
-            border: 1px solid #bdc3c7;
         }
 
-        .stat-box:not(:last-child) {
-            border-left: none;
+        .stat-item {
+            display: inline-block;
+            width: 22%;
+            margin: 5px;
+            vertical-align: top;
         }
 
         .stat-label {
-            font-size: 10px;
-            color: #7f8c8d;
-            margin-bottom: 5px;
+            font-size: 9px;
+            display: block;
+            margin-bottom: 3px;
         }
 
         .stat-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            color: #2c3e50;
+            display: block;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
-        table thead {
-            background: #34495e;
-            color: white;
-        }
-
-        table th {
-            padding: 10px;
+        th, td {
+            border: 1px solid #000;
+            padding: 6px 4px;
             text-align: center;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        table td {
-            padding: 8px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-            font-size: 10px;
-        }
-
-        table tbody tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-
-        table tbody tr:hover {
-            background: #e8f4f8;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
             font-size: 9px;
+        }
+
+        th {
             font-weight: bold;
+            background-color: #e0e0e0;
         }
 
-        .badge-pending {
-            background: #f39c12;
-            color: white;
-        }
-
-        .badge-paid {
-            background: #27ae60;
-            color: white;
-        }
-
-        .badge-cancelled {
-            background: #e74c3c;
-            color: white;
+        .total {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #000;
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
         }
 
         .footer {
-            margin-top: 40px;
-            padding-top: 15px;
-            border-top: 2px solid #ecf0f1;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #000;
             text-align: center;
-            font-size: 10px;
-            color: #7f8c8d;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #95a5a6;
+            font-size: 9px;
         }
     </style>
 </head>
@@ -183,46 +118,42 @@
         <p>تاريخ التقرير: {{ date('Y-m-d H:i') }}</p>
     </div>
 
-    <div class="info-section">
+    <div class="info-box">
         <h3>معلومات الطالب</h3>
         <div class="info-row">
-            <div class="info-label">كود الطالب:</div>
-            <div class="info-value">{{ $customer->Code }}</div>
+            <span class="label">كود الطالب:</span> {{ $customer->Code }}
         </div>
         <div class="info-row">
-            <div class="info-label">الاسم:</div>
-            <div class="info-value">{{ $customer->Name }}</div>
+            <span class="label">الاسم:</span> {{ $customer->Name }}
         </div>
         @if($customer->faculty)
         <div class="info-row">
-            <div class="info-label">الكلية:</div>
-            <div class="info-value">{{ $customer->faculty->NameAR }}</div>
+            <span class="label">الكلية:</span> {{ $customer->faculty->NameAR }}
         </div>
         @endif
         @if($customer->Email)
         <div class="info-row">
-            <div class="info-label">البريد الإلكتروني:</div>
-            <div class="info-value">{{ $customer->Email }}</div>
+            <span class="label">البريد الإلكتروني:</span> {{ $customer->Email }}
         </div>
         @endif
     </div>
 
-    <div class="stats-container">
-        <div class="stat-box">
-            <div class="stat-label">إجمالي الإيصالات</div>
-            <div class="stat-value">{{ $stats['total'] }}</div>
+    <div class="stats">
+        <div class="stat-item">
+            <span class="stat-label">إجمالي الإيصالات</span>
+            <span class="stat-value">{{ $stats['total'] }}</span>
         </div>
-        <div class="stat-box">
-            <div class="stat-label">مدفوع</div>
-            <div class="stat-value" style="color: #27ae60;">{{ $stats['paid'] }}</div>
+        <div class="stat-item">
+            <span class="stat-label">مدفوع</span>
+            <span class="stat-value">{{ $stats['paid'] }}</span>
         </div>
-        <div class="stat-box">
-            <div class="stat-label">معلق</div>
-            <div class="stat-value" style="color: #f39c12;">{{ $stats['pending'] }}</div>
+        <div class="stat-item">
+            <span class="stat-label">معلق</span>
+            <span class="stat-value">{{ $stats['pending'] }}</span>
         </div>
-        <div class="stat-box">
-            <div class="stat-label">ملغي</div>
-            <div class="stat-value" style="color: #e74c3c;">{{ $stats['cancelled'] }}</div>
+        <div class="stat-item">
+            <span class="stat-label">ملغي</span>
+            <span class="stat-value">{{ $stats['cancelled'] }}</span>
         </div>
     </div>
 
@@ -242,16 +173,16 @@
         <tbody>
             @foreach($receipts as $receipt)
             <tr>
-                <td><strong>#{{ $receipt->ID }}</strong></td>
+                <td>{{ $receipt->ID }}</td>
                 <td>{{ $receipt->service ? $receipt->service->SERVICESName : 'غير محدد' }}</td>
-                <td>{{ $receipt->service ? number_format($receipt->service->value, 2) : '-' }} جنيه</td>
+                <td>{{ $receipt->service ? number_format($receipt->service->value, 2) : '-' }}</td>
                 <td>
                     @if($receipt->BillStatus == 1)
-                        <span class="badge badge-pending">معلق</span>
+                        معلق
                     @elseif($receipt->BillStatus == 2)
-                        <span class="badge badge-paid">مدفوع</span>
+                        مدفوع
                     @else
-                        <span class="badge badge-cancelled">ملغي</span>
+                        ملغي
                     @endif
                 </td>
                 <td>{{ $receipt->created_at ? $receipt->created_at->format('Y-m-d') : '-' }}</td>
@@ -262,12 +193,12 @@
         </tbody>
     </table>
 
-    <div style="margin-top: 20px; padding: 10px; background: #ecf0f1; border-radius: 5px;">
-        <strong>إجمالي القيمة المالية:</strong> {{ number_format($stats['total_amount'], 2) }} جنيه
+    <div class="total">
+        إجمالي القيمة المالية: {{ number_format($stats['total_amount'], 2) }} جنيه
     </div>
     @else
-    <div class="no-data">
-        <p style="font-size: 14px;">لا توجد إيصالات متاحة</p>
+    <div style="text-align: center; padding: 30px;">
+        لا توجد إيصالات متاحة
     </div>
     @endif
 

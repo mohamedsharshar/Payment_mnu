@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\StudentReceiptsExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Mpdf\Mpdf;
 
 class ReceiptController extends Controller
 {
@@ -154,12 +154,33 @@ class ReceiptController extends Controller
             })
         ];
 
-        $pdf = Pdf::loadView('student.receipts.pdf', compact('receipts', 'customer', 'stats'))
-            ->setPaper('a4', 'portrait')
-            ->setOption('encoding', 'utf-8');
+        // إنشاء HTML
+        $html = view('student.receipts.pdf', compact('receipts', 'customer', 'stats'))->render();
+
+        // إعداد mPDF
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'orientation' => 'P',
+            'margin_left' => 15,
+            'margin_right' => 15,
+            'margin_top' => 15,
+            'margin_bottom' => 15,
+            'margin_header' => 0,
+            'margin_footer' => 0,
+            'default_font' => 'DejaVuSans'
+        ]);
+
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
+        $mpdf->SetDirectionality('rtl');
+
+        $mpdf->WriteHTML($html);
 
         $fileName = 'receipts_' . $customer->Code . '_' . date('Y-m-d') . '.pdf';
 
-        return $pdf->download($fileName);
+        return response()->streamDownload(function() use ($mpdf) {
+            echo $mpdf->Output('', 'S');
+        }, $fileName);
     }
 }
